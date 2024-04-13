@@ -21,7 +21,7 @@ const parseData = (html) => {
     const root = parse(html);
     const getValueFromElement = (element) => element ? parseBytesFromString(element.textContent.trim()) : 0
 
-    const [yggtorrentDownloadTotal, yggtorrentUploadTotal] = root.querySelectorAll('#middle .content .card-footer strong').map(getValueFromElement)
+    const [ yggtorrentUploadTotal, yggtorrentDownloadTotal] = root.querySelectorAll('#middle .content .card-footer strong').map(getValueFromElement)
     return {
         yggtorrentDownloadTotal, yggtorrentUploadTotal
     }
