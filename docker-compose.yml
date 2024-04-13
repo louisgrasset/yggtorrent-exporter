@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  prometheus-metric-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      YGG_PROFILE_URL: "" # "https://www3.yggtorrent.xxxxx/profile/xxxxxx-xxxxx"
+      FLARESOLVERR_URL: "" # "http://flaresolverr:8191"

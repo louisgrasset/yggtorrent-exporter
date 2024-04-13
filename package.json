@@ -1,0 +1,24 @@
+{
+  "name": "yggtorrent-exporter",
+  "version": "1.0.0",
+  "description": "YGG Torrent tracker prometheus-compatible metrics exporter",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ygg",
+    "torrent",
+    "prometheus",
+    "metrics"
+  ],
+  "author": "Louis Grasset",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "express": "^4.19.2",
+    "node-html-parser": "^6.1.13",
+    "prom-client": "^15.1.1"
+  }
+}
