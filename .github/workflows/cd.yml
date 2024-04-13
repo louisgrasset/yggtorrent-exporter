@@ -7,7 +7,7 @@ on:
 jobs:
   publish-docker:
     environment: Production
-    name: "Build & Push docker image (dev)"
+    name: "Build & Push docker images"
     runs-on: ubuntu-latest
     permissions:
       packages: write

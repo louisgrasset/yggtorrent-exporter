@@ -2,8 +2,9 @@ version: '3.8'
 
 services:
   yggtorrent-exporter:
-    image: louisgrasset/yggtorrent-exporter:latest
-    container_name: yggtorrent-exporter
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "3000:3000"
