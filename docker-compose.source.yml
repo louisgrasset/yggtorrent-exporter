@@ -1,5 +1,4 @@
-version: '3.8'
-
+---
 services:
   yggtorrent-exporter:
     build:
@@ -9,5 +8,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - YGG_PROFILE_URL= "" # "https://www3.yggtorrent.xxxxx/profile/xxxxxx-xxxxx"
-      - FLARESOLVERR_URL= "" # "http://flaresolverr:8191"
+      - YGG_PROFILE_URL=${YGG_PROFILE_URL} #https://www.ygg.re/user/account
+      - YGG_USER_AGENT=${YGG_USER_AGENT}
+      - YGG_COOKIE=${YGG_COOKIE}

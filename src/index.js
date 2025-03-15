@@ -2,8 +2,7 @@ import express from 'express';
 import {parse} from 'node-html-parser';
 import {Gauge, register} from 'prom-client';
 
-import {parseBytesFromString} from "./helpers/parse-bytes-from-string.js";
-import {proxyRequest} from "./helpers/proxy-request.js";
+import {parseBytesFromString} from "./parse-bytes-from-string.js";
 
 const app = express();
 const port = 3000;
@@ -21,7 +20,8 @@ const parseData = (html) => {
     const root = parse(html);
     const getValueFromElement = (element) => element ? parseBytesFromString(element.textContent.trim()) : 0
 
-    const [ yggtorrentUploadTotal, yggtorrentDownloadTotal] = root.querySelectorAll('#middle .content .card-footer strong').map(getValueFromElement)
+    const [yggtorrentUploadTotal, yggtorrentDownloadTotal] = Array.from(root.querySelectorAll('.card-footer strong')).map(getValueFromElement);
+
     return {
         yggtorrentDownloadTotal, yggtorrentUploadTotal
     }
@@ -31,11 +31,17 @@ const parseData = (html) => {
 const fetchData = async () => {
     console.log('Fetching YGGTorrent user profile data...')
     try {
-        const html = await proxyRequest(process.env.YGG_PROFILE_URL);
-        const data = parseData(html);
+        let headers = new Headers({
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Cookie": process.env.YGG_COOKIE,
+            'User-Agent': process.env.YGG_USER_AGENT,
+        });
+        const html = await fetch(process.env.YGG_PROFILE_URL, {
+            headers
+        }).then(res => res.text());
 
         // Parse data and update metrics
-        const {yggtorrentDownloadTotal, yggtorrentUploadTotal} = data;
+        const {yggtorrentDownloadTotal, yggtorrentUploadTotal} = parseData(html);
 
         yggtorrentDownloadTotalMetric.set(yggtorrentDownloadTotal);
         yggtorrentUploadTotalMetric.set(yggtorrentUploadTotal);
